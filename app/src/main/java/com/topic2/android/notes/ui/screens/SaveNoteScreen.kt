@@ -8,6 +8,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.material.Text
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.BottomDrawer
 import androidx.compose.material.BottomDrawerState
 import androidx.compose.material.BottomDrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -40,6 +42,7 @@ import com.topic2.android.notes.domain.model.NoteModel
 import com.topic2.android.notes.routing.NotesRouter
 import com.topic2.android.notes.routing.Screen
 import androidx.compose.material.Switch
+import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.rememberBottomDrawerState
@@ -84,17 +87,65 @@ fun SaveNoteScreen(viewModel: MainViewModel) {
             onSaveNoteClick = {
                 viewModel.saveNote(noteEntry)
             },
-            onOpenColorPickerClick = {},
+            onOpenColorPickerClick ={
+                coroutineScope.launch { bottomDrawerState.open() }
+            },
             onDeleteNoteClick = {
-                viewModel.moveNoteToTrash(noteEntry)
+                moveNoteToTrashDialogShownState.value = true
             }
         )
     },
         content = {
-            SaveNoteContent(
-                note = noteEntry,
-                onNoteChange = {updateNoteEntry -> viewModel.onNoteEntryChange(updateNoteEntry)}
+            BottomDrawer(
+                drawerState = bottomDrawerState,
+                drawerContent = {
+                    ColorPicker(
+                        colors = colors,
+                        onColorSelect = { color ->
+                            val newNoteEntry = noteEntry.copy(color = color)
+                            viewModel.onNoteEntryChange(newNoteEntry)
+                        }
+                    )
+                },
+                content = {
+                    SaveNoteContent(
+                        note = noteEntry,
+                        onNoteChange = {
+                            updateNoteEntry -> viewModel.onNoteEntryChange(updateNoteEntry)
+                        }
+                    )
+                }
             )
+            if (moveNoteToTrashDialogShownState.value) {
+                AlertDialog(
+                    onDismissRequest = {
+                        moveNoteToTrashDialogShownState.value = false
+                    },
+                    title = {
+                        Text("Move note to the trash?")
+                    },
+                    text = {
+                        Text(
+                            "Are you sure want to" +
+                                    "move this note to the trash?"
+                        )
+                    },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            viewModel.moveNoteToTrash(noteEntry)
+                        }) {
+                            Text("Confirm")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = {
+                            moveNoteToTrashDialogShownState.value = false
+                        }) {
+                            Text("Dismiss")
+                        }
+                    }
+                )
+            }
         }
     )
 }
