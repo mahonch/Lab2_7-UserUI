@@ -35,6 +35,10 @@ import com.topic2.android.notes.domain.model.NEW_NOTE_ID
 import com.topic2.android.notes.domain.model.NoteModel
 import com.topic2.android.notes.routing.NotesRouter
 import com.topic2.android.notes.routing.Screen
+import androidx.compose.material.Switch
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
+
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -193,14 +197,33 @@ private fun SaveNoteTopAppBar(
     )
 }
 @Composable
+private fun ContentTextField(
+    modifier: Modifier = Modifier,
+    label: String,
+    text: String,
+    onTextChange: (String) -> Unit
+) {
+    TextField(
+        value = text,
+        onValueChange = onTextChange,
+        label = { Text(label)},
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp),
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = MaterialTheme.colors.surface
+        )
+    )
+}
+@Composable
 private fun NoteCheckOption(
     isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ){
     Row(
         Modifier
-            .padding (8.dp)
-            .padding (top = 16.dp)
+            .padding(8.dp)
+            .padding(top = 16.dp)
     ){
         Text(
             text = "Can note be checked off?", modifier = Modifier.weight((1f))
@@ -234,6 +257,13 @@ private fun PickedColor(color:ColorModel) {
 }
 @Preview
 @Composable
+fun NoteCheckOptionPreview(){
+    NoteCheckOption(isChecked = false) {
+
+    }
+}
+@Preview
+@Composable
 fun PickedColorPrewiew(){
     PickedColor(ColorModel.DEFAULT)
 }
@@ -246,5 +276,14 @@ fun SaveNoteTopAppBarPreview(){
         onSaveNoteClick = {},
         onOpenColorPickerClick = {},
         onDeleteNoteClick = {}
+    )
+}
+@Preview
+@Composable
+fun ContentTextFieldPreview() {
+    ContentTextField(
+        label = "Title",
+        text = "",
+        onTextChange = {}
     )
 }
