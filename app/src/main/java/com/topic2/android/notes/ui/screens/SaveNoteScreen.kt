@@ -1,4 +1,4 @@
-package com.topic2.android.notes.ui.components
+package com.topic2.android.notes.ui.screens
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.*
@@ -13,8 +13,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.topic2.android.notes.domain.model.ColorModel
+import com.topic2.android.notes.ui.components.NoteColor
 import com.topic2.android.notes.util.fromHex
+import com.topic2.android.notes.viewmodel.MainViewModel
 
+@Composable
+fun SaveNoteScreen(viewModel: MainViewModel) {
+}
 
 @Composable
 fun ColorItem(

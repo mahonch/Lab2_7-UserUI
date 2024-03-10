@@ -8,7 +8,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import com.topic2.android.notes.routing.NotesRouter
 import com.topic2.android.notes.routing.Screen
 import com.topic2.android.notes.theme.NotesTheme
 import com.topic2.android.notes.ui.components.AppDrawer
@@ -17,6 +19,12 @@ import com.topic2.android.notes.ui.screens.NotesScreen
 import com.topic2.android.notes.viewmodel.MainViewModel
 import com.topic2.android.notes.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.launch
+import com.topic2.android.notes.ui.screens.SaveNoteScreen
+import com.topic2.android.notes.ui.screens.TrashScreen
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Surface
+
+
 
 /**
  * Main activity приложения.
@@ -39,6 +47,18 @@ class MainActivity : AppCompatActivity() {
         NotesScreen(viewModel = viewModel)
 
       }
+    }
+  }
+}
+
+@Composable
+@ExperimentalMaterialApi
+private fun MainActivityScreen(viewModel: MainViewModel) {
+  Surface {
+    when (NotesRouter.currentScreen) {
+      is Screen.Notes -> NotesScreen(viewModel)
+      is Screen.SaveNote -> SaveNoteScreen(viewModel)
+      is Screen.Trash -> TrashScreen(viewModel)
     }
   }
 }
