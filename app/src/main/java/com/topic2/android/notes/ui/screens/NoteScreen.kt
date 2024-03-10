@@ -12,7 +12,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
 import com.topic2.android.notes.domain.model.NoteModel
 import com.topic2.android.notes.ui.components.Note
+import androidx.compose.material.Scaffold
+import android.annotation.SuppressLint
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun NotesScreen(
     viewModel: MainViewModel
@@ -20,17 +23,25 @@ fun NotesScreen(
     val notes: List<NoteModel> by viewModel
         .notesNotInTrash
         .observeAsState(listOf())
-    Column {
-        TopAppBar(title = "Заметки",
+    Scaffold(topBar ={
+        TopAppBar(
+            title ="Notes" ,
             icon = Icons.Filled.List,
-            onIconClick = {}
-        )
-        NotesList(
-            notes = notes,
-            onNoteCheckedChange = { viewModel.onNoteCheckedChange(it) },
-            onNoteClick = { viewModel.onNoteClick(it) })
-    }
+            onIconClick = {})
+    },
+        content = {
+            if (notes.isNotEmpty()) {
+                NotesList(
+                    notes = notes, onNoteCheckedChange = {
+                        viewModel.onNoteCheckedChange(it)
+                    },
+                    onNoteClick = { viewModel.onNoteClick(it)}
+                )
+            }
+        }
+    )
 }
+
 @Composable
 private fun NotesList(
     notes: List<NoteModel>,
