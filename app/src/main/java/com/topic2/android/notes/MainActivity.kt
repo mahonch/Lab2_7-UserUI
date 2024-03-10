@@ -37,20 +37,18 @@ class MainActivity : AppCompatActivity() {
       (application as NotesApplication).dependencyInjector.repository
     )
   })
-
+  @OptIn(ExperimentalMaterialApi::class)
   @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
     setContent {
       NotesTheme {
-        NotesScreen(viewModel = viewModel)
-
+        MainActivityScreen(viewModel = viewModel)
       }
     }
   }
 }
-
 @Composable
 @ExperimentalMaterialApi
 private fun MainActivityScreen(viewModel: MainViewModel) {

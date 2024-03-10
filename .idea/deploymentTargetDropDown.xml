@@ -9,7 +9,20 @@
         <State />
       </entry>
       <entry key="Lab 2">
-        <State />
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="JNYLJ7HEXOI7QOC6" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-03-10T11:51:43.580529500Z" />
+        </State>
       </entry>
       <entry key="MainActivity">
         <State />
