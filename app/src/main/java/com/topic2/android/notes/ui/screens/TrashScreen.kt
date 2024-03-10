@@ -153,6 +153,7 @@ private fun Content(
   notes: List<NoteModel>,
   onNoteClick: (NoteModel) -> Unit,
   selectedNotes: List<NoteModel>,
+
 ) {
   val tabs = listOf("REGULAR", "CHECKABLE")
 
@@ -187,7 +188,6 @@ private fun Content(
         Note(
           note = note,
           onNoteClick = onNoteClick,
-          isSelected = isNoteSelected
         )
       }
     }
